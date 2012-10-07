@@ -51,7 +51,7 @@ angular.module('AngularTable', []).directive('angulartable', function ($filter) 
                 scope.colkeys.push(subcol.key);
               }, row2);
             } else {
-              row2.push({name: "", colspan: 1})
+              row2.push({label: "", colspan: 1})
               scope.colkeys.push(item.key);
             }
             this.push({
