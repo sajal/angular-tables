@@ -1,0 +1,24 @@
+<div>
+  <table border=1>
+    <thead>
+      <tr ng-repeat='row in head'>
+        <th ng-repeat='item in row' colspan="{{item.colspan}}">
+          {{item.label}}
+          <span ng-show='item.sortable'> ( 
+            <a ng-class='getsortclass(item.key, true)' ng-click='sorting.key=item.key;sorting.reverse=true'>&uarr;</a>
+            <a ng-class='getsortclass(item.key, false)' ng-click='sorting.key=item.key;sorting.reverse=false'>&darr;</a>
+          )</span>
+          <span ng-show='item.searchable'><br /><input type="text" ng-model="search[item.key]"></span>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat='row in body|limitTo:perpage' ng-class="row._cssclass" >
+        <td ng-repeat='key in colkeys'>{{getfiltered(row[key], key)}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button data-ng-disabled='curpage == 1' data-ng-click='refilter(curpage - 1)'>&lt;&lt; Previous</button>
+  Page {{curpage}} of {{numpages}}
+  <button data-ng-disabled='curpage == numpages' data-ng-click='refilter(curpage + 1)'>Next &gt;&gt;</button>
+</div>
