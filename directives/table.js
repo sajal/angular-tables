@@ -67,7 +67,6 @@ angular.module('AngularTable', []).directive('angulartable', function ($filter) 
             scope.head.push(row2);
           }
           scope.original = scope.tdata.rows;
-          console.log(scope.head, scope.colkeys)
         }
         if ((scope.tdata.config) && (scope.tdata.config.defaultsort)){
           scope.sorting = scope.tdata.config.defaultsort
@@ -77,7 +76,6 @@ angular.module('AngularTable', []).directive('angulartable', function ($filter) 
         //Bootstrap pagination things
         if ((scope.tdata.config) && (scope.tdata.config.perpage)){
           scope.perpage = scope.tdata.config.perpage
-          console.log(scope.perpage)
         } else {
           scope.perpage = 20
         }
@@ -86,7 +84,6 @@ angular.module('AngularTable', []).directive('angulartable', function ($filter) 
 
       scope.refilter = function(pagenum){
         scope.curpage = pagenum
-        console.log(pagenum)
         scope.body = $filter('filter')(scope.original, scope.search);
         if (scope.sorting && scope.sorting.key){
           scope.body.sort(function(a,b){
