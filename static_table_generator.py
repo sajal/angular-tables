@@ -76,7 +76,7 @@ if "__main__" in __name__:
         for key in colkeys:
             html += "<td>%s</td>" %(row[key])
         html += "</tr>"
-    html += "</tbody></table></div>"
+    html += "</tbody></table>Use JS client to see rich table</div>"
 
     print html
     
