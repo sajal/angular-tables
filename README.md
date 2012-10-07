@@ -17,3 +17,22 @@ Given data and configuration for a table, generate a fallback static HTML table,
 * Searchable
 * Loadable Asynchronously
 * Paginated
+
+Usage
+=====
+
+Need table described in JSON format.
+
+TODO: Describe format
+
+1. Make static table
+
+	$ cat file_containing_json.json | ./static_table_generator.py
+
+Will output the static non-js table
+
+2. Read sample.html or demo.html to see how to pass off the same json to angular.
+
+3. ???
+
+4. Profit!!!
