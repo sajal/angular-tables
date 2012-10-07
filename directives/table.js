@@ -2,7 +2,7 @@ angular.module('AngularTable', []).directive('angulartable', function ($filter) 
   return {
     restrict:'EAC',
     replace:true,
-    templateUrl:'/directives/template.html',
+    templateUrl:'directives/template.html',
     scope: {"tdata" : "=ngModel"},
     link:function (scope, element, attrs) {
       scope.getsortclass = function(key, reverse){
