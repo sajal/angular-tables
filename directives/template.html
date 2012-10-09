@@ -14,7 +14,7 @@
     </thead>
     <tbody>
       <tr ng-repeat='row in body|limitTo:perpage' ng-class="row._cssclass" >
-        <td ng-repeat='key in colkeys'>{{getfiltered(row[key], key)}}</td>
+        <td ng-repeat='key in colkeys'>{{getfiltered(getitem(row, key), key)}}</td>
       </tr>
     </tbody>
   </table>

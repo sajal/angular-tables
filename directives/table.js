@@ -23,6 +23,21 @@ angular.module('AngularTable', []).directive('angulartable', function ($filter) 
         }
         return filtered
       }
+
+      scope.getitem = function(obj, key){
+        keys = key.split(".")
+        for(i=0;i<keys.length;i++){
+          key = keys[i]
+          if (obj[key]){
+            obj = obj[key]
+          } else {
+            return 0
+          }
+          
+        }
+        return obj
+      }
+
       var initialize = function(){
         //Runs each time the associated ng-model is updated
         if (scope.tdata){
@@ -83,27 +98,28 @@ angular.module('AngularTable', []).directive('angulartable', function ($filter) 
       }
 
       scope.refilter = function(pagenum){
-        scope.curpage = pagenum
-        scope.body = $filter('filter')(scope.original, scope.search);
-        if (scope.sorting && scope.sorting.key){
-          scope.body.sort(function(a,b){
-            return a[scope.sorting.key] - b[scope.sorting.key]
-          });
-          if (scope.sorting.reverse){
-            scope.body.reverse()
+        if (scope.tdata){
+          scope.curpage = pagenum
+          scope.body = $filter('filter')(scope.original, scope.search);
+          if (scope.sorting && scope.sorting.key){
+            scope.body.sort(function(a,b){
+              return scope.getitem(a, scope.sorting.key) - scope.getitem(b, scope.sorting.key)
+            });
+            if (scope.sorting.reverse){
+              scope.body.reverse()
+            }
           }
+          scope.numpages = Math.ceil(scope.body.length / scope.perpage);
+          //Set class by hand- dunno why angular gets confused :(
+          var tmpfiltered = scope.body.slice(scope.perpage * (scope.curpage - 1))
+          scope.body = []
+          var rowclass = "even"
+          angular.forEach(tmpfiltered, function(row){
+            rowclass = rowclass == "even" ? "odd":"even" ;
+            row._cssclass = rowclass;
+            this.push(row)
+          }, scope.body)
         }
-        scope.numpages = Math.ceil(scope.body.length / scope.perpage);
-        //Set class by hand- dunno why angular gets confused :(
-        var tmpfiltered = scope.body.slice(scope.perpage * (scope.curpage - 1))
-        scope.body = []
-        var rowclass = "even"
-        angular.forEach(tmpfiltered, function(row){
-          rowclass = rowclass == "even" ? "odd":"even" ;
-          row._cssclass = rowclass;
-          this.push(row)
-        }, scope.body)
-        
       }
 
 
@@ -111,6 +127,10 @@ angular.module('AngularTable', []).directive('angulartable', function ($filter) 
       //run initialize once.. just for the fun of it..
       initialize()
       scope.$watch("ngModel", function(){
+        //The whole table gets re-initialized if associated data changes
+        initialize()
+      })
+      scope.$watch("tdata", function(){
         //The whole table gets re-initialized if associated data changes
         initialize()
       })
