@@ -71,11 +71,16 @@ if "__main__" in __name__:
             html += "<th colspan='%s'>%s</th>" %(col["colspan"], col["label"])
         html += "</tr>"
     html += "</thead><tbody>"
+    rowclass = "odd"
     for row in rows:
-        html += "<tr>"
+        html += "<tr class=\"%s\">" %(rowclass)
         for key in colkeys:
             html += "<td>%s</td>" %(row[key])
         html += "</tr>"
+        if rowclass == "odd":
+            rowclass = "even"
+        else:
+            rowclass = "odd"
     html += "</tbody></table>Use JS client to see rich table</div>"
 
     print html
